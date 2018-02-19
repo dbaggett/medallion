@@ -1,0 +1,9 @@
+rootProject.name = 'medallion'
+
+include 'ws-olympics'
+include 'ws-countries'
+include 'ws-events'
+include 'ws-athletes'
+include 'ws-medals'
+include 'common'
+

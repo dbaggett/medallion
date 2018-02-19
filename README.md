@@ -1,0 +1,1 @@
+A contrived Olympic Games example to demonstrate the aggregation of gRPC enabled web-services into a GraphQL middleware.
