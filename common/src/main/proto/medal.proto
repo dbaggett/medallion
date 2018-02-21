@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "common.services.grpc.medal";
+option java_outer_classname = "MedalServiceProto";
+
+package common.services.grpc.medal;
+
+service MedalService {
+    rpc GetMedalsForAthlete (AthleteMedalsRequest) returns (Medals) {}
+}
+
+message AthleteMedalsRequest {
+    int64 athleteId = 1;
+}
+
+message Medals {
+    repeated Medal medals = 1;
+}
+
+message Medal {
+    string rank = 1;
+    string event = 2;
+    string sport = 3;
+    int32 year = 4;
+    string country = 5;
+}

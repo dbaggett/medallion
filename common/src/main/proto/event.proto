@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "common.services.grpc.event";
+option java_outer_classname = "EventServiceProto";
+
+package common.services.grpc.event;
+
+service EventService {
+    rpc GetEventsByYearAndSeason (EventRequest) returns (Events) {}
+}
+
+message EventRequest {
+    int32 year = 1;
+    string season = 2;
+}
+
+message Events {
+    repeated Event events = 1;
+}
+
+message Event {
+    int64 id = 1;
+    string name = 2;
+    string sport = 3;
+    repeated OlympicGame olympics = 4;
+}
+
+message OlympicGame {
+    int32 year = 1;
+    string season = 2;
+}

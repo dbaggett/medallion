@@ -1,0 +1,82 @@
+buildscript {
+    ext {
+        java_protobuf = '3.4.0'
+        gradle_protobuf = '0.8.3'
+        protoc = '3.4.0'
+        java_grpc = '1.7.0'
+    }
+
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath "com.google.protobuf:protobuf-gradle-plugin:$gradle_protobuf"
+    }
+}
+
+apply plugin: 'idea'
+apply plugin: 'com.google.protobuf'
+
+repositories {
+    jcenter()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    compile "io.grpc:grpc-netty:$java_grpc"
+    compile "io.grpc:grpc-protobuf:$java_grpc"
+    compile "io.grpc:grpc-stub:$java_grpc"
+}
+
+// Add grpc directory to sources
+sourceSets.main.java.srcDir file("$buildDir/generated/source/grpc/main")
+
+idea {
+    module {
+        sourceDirs += file("${protobuf.generatedFilesBaseDir}/main/java");
+        sourceDirs += file("${protobuf.generatedFilesBaseDir}/main/grpc");
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs += "${protobuf.generatedFilesBaseDir}/main/java"
+            srcDirs += "${protobuf.generatedFilesBaseDir}/main/grpc"
+        }
+    }
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:$protoc"
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:$java_grpc"
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}
+
+clean {
+    delete protobuf.generatedFilesBaseDir
+}
+
+compileKotlin {
+    kotlinOptions {
+        apiVersion = "1.1"
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        apiVersion = "1.1"
+        jvmTarget = "1.8"
+    }
+}

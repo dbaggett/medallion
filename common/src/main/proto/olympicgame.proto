@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "common.services.grpc.olympicgame";
+option java_outer_classname = "OlympicGameServiceProto";
+
+package common.services.grpc.olympicgame;
+
+service OlympicGameService {
+    rpc GetAllOlympicGames (Empty) returns (OlympicGames) {}
+    rpc GetOlympicGame (OlympicGameRequest) returns (OlympicGame) {}
+}
+
+message OlympicGameRequest {
+    int64 id = 1;
+}
+
+message OlympicGames {
+    repeated OlympicGame olympics = 1;
+}
+
+message OlympicGame {
+    int32 year = 1;
+    string season = 2;
+    string city = 3;
+    string contry = 4;
+}
+
+message Empty {
+
+}

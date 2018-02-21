@@ -2,6 +2,8 @@ plugins {
     id "org.flywaydb.flyway" version "4.2.0"
 }
 
-dependencies {
-    compile project(':common')
+flyway {
+    url = "jdbc:postgresql://localhost/postgres"
+    user = "postgres"
+    password = ""
 }

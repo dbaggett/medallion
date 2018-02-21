@@ -1,3 +1,3 @@
 package domain.model
 
-data class OlympicGame(val id: Long, val year: Int, val season: Season)
+data class OlympicGame(val year: Int, val season: Season)

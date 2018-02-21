@@ -1,10 +1,18 @@
 buildscript {
     ext {
         kotlinVersion = "1.1.4-3"
-        grpcVersion = "1.6.1"
         config4kVersion = "0.3.0"
         junitPlatformVersion = "1.0.0-M4"
         requeryVersion = "1.4.0"
+        guiceVersion = "4.0"
+        kotlinReflect = "1.1.0"
+        grpcDeployables = [
+                project(':ws-athletes'),
+                project(':ws-countries'),
+                project(':ws-events'),
+                project(':ws-medals'),
+                project(':ws-olympics')
+        ]
     }
 
     repositories {
@@ -14,7 +22,6 @@ buildscript {
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.3'
         classpath "org.junit.platform:junit-platform-gradle-plugin:$junitPlatformVersion"
     }
 }
@@ -22,52 +29,45 @@ buildscript {
 group 'hack-week-br'
 version '1.0'
 
-subprojects {
+allprojects {
+    apply plugin: "java"
+    apply plugin: "kotlin"
+}
+
+configure(grpcDeployables) {
 
     repositories {
         jcenter()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
 
     apply plugin: "idea"
-    apply plugin: "java"
-    apply plugin: "kotlin"
     apply plugin: "application"
-    apply plugin: 'com.google.protobuf'
-    apply plugin: "org.junit.platform.gradle.plugin"
     apply plugin: "kotlin-kapt"
+
+    mainClassName = "app.ServerKt"
 
     sourceCompatibility = 1.8
 
     dependencies {
         compile "io.github.config4k:config4k:$config4kVersion"
         compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlinVersion"
-        compile "com.google.api.grpc:proto-google-common-protos:0.1.9"
-        compile "io.grpc:grpc-netty:${grpcVersion}"
-        compile "io.grpc:grpc-protobuf:${grpcVersion}"
-        compile "io.grpc:grpc-stub:${grpcVersion}"
+        compile "com.google.inject:guice:$guiceVersion"
+        compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinReflect"
+        compile "com.google.api.graphql:rejoiner:0.0.1-SNAPSHOT"
+        compile "com.google.api.graphql:execution:0.0.1-SNAPSHOT"
+        compile project(':common')
         kapt "io.requery:requery-processor:$requeryVersion"
     }
 
-    // Add grpc directory to sources
-    sourceSets.main.java.srcDir file("$buildDir/generated/source/grpc/main")
-    sourceSets.test.java.srcDir file("$buildDir/generated/source/grpc/test")
+    sourceSets.main.java.srcDir file("${project.buildDir}/generated/source/kapt/main")
+    sourceSets.test.java.srcDir file("${project.buildDir}/generated/source/kapt/test")
 
     idea {
         module {
             // Tell idea to mark the folder as generated sources
             generatedSourceDirs += file("$buildDir/generated/source/kapt/main")
             generatedSourceDirs += file("$buildDir/generated/source/kapt/test")
-            generatedSourceDirs += file("${protobuf.generatedFilesBaseDir}/main/java")
-            generatedSourceDirs += file("${protobuf.generatedFilesBaseDir}/main/grpc")
-        }
-    }
-
-    sourceSets {
-        main {
-            java {
-                srcDirs += "${protobuf.generatedFilesBaseDir}/main/java"
-                srcDirs += "${protobuf.generatedFilesBaseDir}/main/grpc"
-            }
         }
     }
 

@@ -5,3 +5,9 @@ plugins {
 dependencies {
     compile project(':common')
 }
+
+flyway {
+    url = "jdbc:postgresql://localhost/postgres"
+    user = "postgres"
+    password = ""
+}

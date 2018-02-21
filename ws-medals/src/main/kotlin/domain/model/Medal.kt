@@ -6,5 +6,6 @@ data class Medal(
         val athleteId: Long,
         val event: EventType,
         val sport: Sport,
-        val year: Int
+        val year: Int,
+        val country: String
 )
