@@ -1,9 +1,12 @@
 package graphql
 
+import com.google.api.graphql.execution.GuavaListenableFutureSupport
 import com.google.common.collect.ImmutableMap
 import com.google.common.io.CharStreams
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import graphql.execution.instrumentation.ChainedInstrumentation
+import graphql.execution.instrumentation.tracing.TracingInstrumentation
 import graphql.schema.MedallionSchema
 import org.eclipse.jetty.server.Request
 import org.eclipse.jetty.server.Server
@@ -21,8 +24,15 @@ class GraphQLServer : AbstractHandler() {
 
     private val marshaller = GsonBuilder().serializeNulls().create()
     private inline fun <reified T> genericType() = object: TypeToken<T>() {}.type
+    private val instrumentation = ChainedInstrumentation(
+            listOf(
+                    GuavaListenableFutureSupport.listenableFutureInstrumentation(),
+                    TracingInstrumentation()
+            )
+    )
 
-    private val graph = GraphQL.newGraphQL(MedallionSchema.schema).build()
+    private val schema = MedallionSchema.schema
+    private val graph = GraphQL.newGraphQL(schema).instrumentation(instrumentation).build()
 
     @Throws(Exception::class)
     fun start(port: Int) {
@@ -31,7 +41,7 @@ class GraphQLServer : AbstractHandler() {
         val resourceHandler = ResourceHandler()
         resourceHandler.welcomeFiles = arrayOf("index.html")
         resourceHandler.isDirectoriesListed = false
-        resourceHandler.baseResource = Resource.newResource(".../src/main/resources")
+        resourceHandler.baseResource = Resource.newResource("./src/main/resources")
 
         val handlerList = HandlerList()
         handlerList.handlers = arrayOf(resourceHandler, this)
