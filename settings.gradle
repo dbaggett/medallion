@@ -6,4 +6,5 @@ include 'ws-events'
 include 'ws-athletes'
 include 'ws-medals'
 include 'common'
+include 'graphql-api'
 

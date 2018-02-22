@@ -26,10 +26,10 @@ buildscript {
     }
 }
 
-group 'hack-week-br'
-version '1.0'
-
 allprojects {
+    group 'hack-week-br'
+    version '1.0'
+
     apply plugin: "java"
     apply plugin: "kotlin"
 }
@@ -38,7 +38,6 @@ configure(grpcDeployables) {
 
     repositories {
         jcenter()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
 
     apply plugin: "idea"
@@ -54,8 +53,6 @@ configure(grpcDeployables) {
         compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlinVersion"
         compile "com.google.inject:guice:$guiceVersion"
         compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinReflect"
-        compile "com.google.api.graphql:rejoiner:0.0.1-SNAPSHOT"
-        compile "com.google.api.graphql:execution:0.0.1-SNAPSHOT"
         compile project(':common')
         kapt "io.requery:requery-processor:$requeryVersion"
     }
@@ -70,8 +67,6 @@ configure(grpcDeployables) {
             generatedSourceDirs += file("$buildDir/generated/source/kapt/test")
         }
     }
-
-    kotlin { experimental { coroutines "enable" } }
 
     compileKotlin {
         kotlinOptions {

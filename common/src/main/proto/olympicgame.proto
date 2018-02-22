@@ -23,7 +23,7 @@ message OlympicGame {
     int32 year = 1;
     string season = 2;
     string city = 3;
-    string contry = 4;
+    string host = 4;
 }
 
 message Empty {

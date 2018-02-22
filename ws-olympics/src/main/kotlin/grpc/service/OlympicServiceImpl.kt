@@ -16,7 +16,7 @@ class OlympicServiceImpl : OlympicGameServiceGrpc.OlympicGameServiceImplBase() {
                 .setYear(year)
                 .setSeason(season.toString())
                 .setCity(city)
-                .setContry(country)
+                .setHost(country)
                 .build()
     }
 

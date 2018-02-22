@@ -7,7 +7,7 @@ class Server {
     private var grpc: GrpcServer? = GrpcServer()
 
     fun start() {
-        val port = 50001
+        val port = 50002
 
         registerShutdownHook(this)
 
