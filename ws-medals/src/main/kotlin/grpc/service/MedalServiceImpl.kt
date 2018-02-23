@@ -27,6 +27,13 @@ class MedalServiceImpl : MedalServiceGrpc.MedalServiceImplBase() {
                 .build()
     }
 
+    override fun getAllMedals(request: Empty?, responseObserver: StreamObserver<Medals>?) {
+        val responseBuilder = Medals.newBuilder().addAllMedals(store.map { it.toMessage() })
+
+        responseObserver?.onNext(responseBuilder.build())
+        responseObserver?.onCompleted()
+    }
+
     override fun getMedalsForAthlete(request: AthleteMedalsRequest?, responseObserver: StreamObserver<Medals>?) {
         val medals = store.filter { it.athleteId == request?.athleteId }
 

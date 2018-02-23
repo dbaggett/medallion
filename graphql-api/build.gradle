@@ -3,6 +3,7 @@ sourceCompatibility = 1.8
 repositories {
     jcenter()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url "https://jitpack.io" }
 }
 
 apply plugin: "application"
@@ -16,6 +17,7 @@ dependencies {
     compile "com.google.api.graphql:execution:0.0.1-SNAPSHOT"
     compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.3.8.v20160314'
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinReflect"
+    compile 'com.github.vjames19:kotlin-futures:0.4.0'
     compile project(':common')
 }
 

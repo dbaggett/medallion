@@ -7,6 +7,7 @@ option java_outer_classname = "MedalServiceProto";
 package common.services.grpc.medal;
 
 service MedalService {
+    rpc GetAllMedals (Empty) returns (Medals) {}
     rpc GetMedalsForAthlete (AthleteMedalsRequest) returns (Medals) {}
 }
 
@@ -24,4 +25,8 @@ message Medal {
     string sport = 3;
     int32 year = 4;
     string country = 5;
+}
+
+message Empty {
+
 }

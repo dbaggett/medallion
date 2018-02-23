@@ -13,6 +13,7 @@ class OlympicServiceImpl : OlympicGameServiceGrpc.OlympicGameServiceImplBase() {
     private fun domain.model.OlympicGame.toMessage(): OlympicGame {
         return OlympicGame
                 .newBuilder()
+                .setId(id)
                 .setYear(year)
                 .setSeason(season.toString())
                 .setCity(city)

@@ -34,6 +34,13 @@ class EventServiceImpl : EventServiceGrpc.EventServiceImplBase() {
                 .build()
     }
 
+    override fun getAllEvents(request: Empty?, responseObserver: StreamObserver<Events>?) {
+        val responseBuilder = Events.newBuilder().addAllEvents(store.map { it.toMessage() })
+
+        responseObserver?.onNext(responseBuilder.build())
+        responseObserver?.onCompleted()
+    }
+
     override fun getEventsByYearAndSeason(request: EventRequest?, responseObserver: StreamObserver<Events>?) {
         val events = store.filter { it.olympics.contains(domain.model.OlympicGame(request!!.year, Season.valueOf(request.season))) }
 

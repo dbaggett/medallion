@@ -7,6 +7,7 @@ option java_outer_classname = "EventServiceProto";
 package common.services.grpc.event;
 
 service EventService {
+    rpc GetAllEvents (Empty) returns (Events) {}
     rpc GetEventsByYearAndSeason (EventRequest) returns (Events) {}
 }
 
@@ -29,4 +30,8 @@ message Event {
 message OlympicGame {
     int32 year = 1;
     string season = 2;
+}
+
+message Empty {
+
 }

@@ -58,6 +58,13 @@ class AthleteServiceImpl : AthleteServiceGrpc.AthleteServiceImplBase() {
                 .build()
     }
 
+    override fun getAllAthletes(request: Empty?, responseObserver: StreamObserver<Athletes>?) {
+        val responseBuilder = Athletes.newBuilder().addAllAthletes(store.map { it.toMessage() })
+
+        responseObserver?.onNext(responseBuilder.build())
+        responseObserver?.onCompleted()
+    }
+
     override fun getAthletesByCountry(request: AthletesByCountryRequest?, responseObserver: StreamObserver<Athletes>?) {
         val athletes = store.filter { it.competitions.filter { it.country == request?.country }.isNotEmpty() }
 
@@ -70,11 +77,21 @@ class AthleteServiceImpl : AthleteServiceGrpc.AthleteServiceImplBase() {
     override fun getAthletesByCompetition(request: AthletesByCompetitionRequest?, responseObserver: StreamObserver<Athletes>?) {
         val athletes = store.filter {
             it.competitions.filter {
-                it.season == Season.valueOf(request!!.season)
-                        && it.year == request.year
-                        && it.eventType == EventType.valueOf(request.event)
+                it.eventType == EventType.valueOf(request!!.event)
                         && it.sport == Sport.valueOf(request.sport)
+                        && request.occurrencesList.map { it.year to it.season }.contains(it.year to it.season.toString())
             }.isNotEmpty()
+        }
+
+        val responseBuilder = Athletes.newBuilder().addAllAthletes(athletes.map { it.toMessage() })
+
+        responseObserver?.onNext(responseBuilder.build())
+        responseObserver?.onCompleted()
+    }
+
+    override fun getAthletesByGame(request: AthletesByGameRequest?, responseObserver: StreamObserver<Athletes>?) {
+        val athletes = store.filter {
+            it.competitions.filter { it.year == request!!.year && it.season.toString() == request.season }.isNotEmpty()
         }
 
         val responseBuilder = Athletes.newBuilder().addAllAthletes(athletes.map { it.toMessage() })

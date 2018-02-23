@@ -1,25 +1,31 @@
 syntax = "proto3";
 
+package common.services.grpc.athlete;
+
 option java_multiple_files = true;
 option java_package = "common.services.grpc.athlete";
 option java_outer_classname = "AthleteServiceProto";
 
-package common.services.grpc.athlete;
-
 service AthleteService {
+    rpc GetAllAthletes (Empty) returns (Athletes) {}
     rpc GetAthletesByCountry (AthletesByCountryRequest) returns (Athletes) {}
     rpc GetAthletesByCompetition (AthletesByCompetitionRequest) returns (Athletes) {}
+    rpc GetAthletesByGame (AthletesByGameRequest) returns (Athletes) {}
 }
 
 message AthletesByCompetitionRequest {
-    string season = 1;
-    int32 year = 2;
-    string event = 3;
-    string sport = 4;
+    string event = 1;
+    string sport = 2;
+    repeated Occurrence occurrences = 3;
 }
 
 message AthletesByCountryRequest {
     string country = 1;
+}
+
+message AthletesByGameRequest {
+    int32 year = 1;
+    string season = 2;
 }
 
 message Athletes {
@@ -31,4 +37,13 @@ message Athlete {
     string first = 2;
     string last = 3;
     string gender = 4;
+}
+
+message Occurrence {
+    int32 year = 1;
+    string season = 2;
+}
+
+message Empty {
+
 }
