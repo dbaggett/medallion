@@ -48,7 +48,7 @@ A [GraphiQL](https://github.com/graphql/graphiql) instance is available at http:
 ## Introspection
 Run [this](https://gist.github.com/craigbeck/b90915d49fda19d5b2b17ead14dcd6da) introspection query to learn about supported types and their fields manually.
 
-If your using an apollo client, [apollo-codegen](https://github.com/apollographql/apollo-codegen) can be used to generate the required schema file.
+If you're using an apollo client, [apollo-codegen](https://github.com/apollographql/apollo-codegen) can be used to generate the required schema file.
 
 
 ## Http Examples
