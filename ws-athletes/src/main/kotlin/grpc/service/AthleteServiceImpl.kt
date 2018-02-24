@@ -16,7 +16,7 @@ class AthleteServiceImpl : AthleteServiceGrpc.AthleteServiceImplBase() {
                     "Tony",
                     "Sakic",
                     Gender.MALE,
-                    listOf(Competition(EventType.SLALOM, Sport.ALPING_SKING, Season.WINTER, 2018, "Canada"))
+                    listOf(Competition(EventType.SLALOM, Sport.ALPINE_SKIING, Season.WINTER, 2018, "Canada"))
             ),
             domain.model.Athlete(
                     2,
@@ -30,7 +30,7 @@ class AthleteServiceImpl : AthleteServiceGrpc.AthleteServiceImplBase() {
                     "Aksel",
                     "Jansrud",
                     Gender.MALE,
-                    listOf(Competition(EventType.DOWNHILL, Sport.ALPING_SKING, Season.WINTER, 2018, "Norway"))
+                    listOf(Competition(EventType.DOWNHILL, Sport.ALPINE_SKIING, Season.WINTER, 2018, "Norway"))
             ),
             domain.model.Athlete(
                     4,

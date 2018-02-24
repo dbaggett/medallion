@@ -12,8 +12,8 @@ class EventServiceImpl : EventServiceGrpc.EventServiceImplBase() {
             domain.model.Event(1, EventType.INDIVIDUAL, Sport.FIGURE_SKATING, listOf(domain.model.OlympicGame(2018, Season.WINTER))),
             domain.model.Event(2, EventType.PAIRS, Sport.FIGURE_SKATING, listOf(domain.model.OlympicGame(2018, Season.WINTER))),
             domain.model.Event(3, EventType.HALF_PIPE, Sport.SNOWBOARD, listOf(domain.model.OlympicGame(2018, Season.WINTER))),
-            domain.model.Event(4, EventType.SLALOM, Sport.ALPING_SKING, listOf(domain.model.OlympicGame(2018, Season.WINTER))),
-            domain.model.Event(5, EventType.DOWNHILL, Sport.ALPING_SKING, listOf(domain.model.OlympicGame(2018, Season.WINTER)))
+            domain.model.Event(4, EventType.SLALOM, Sport.ALPINE_SKIING, listOf(domain.model.OlympicGame(2018, Season.WINTER))),
+            domain.model.Event(5, EventType.DOWNHILL, Sport.ALPINE_SKIING, listOf(domain.model.OlympicGame(2018, Season.WINTER)))
     )
 
     private fun domain.model.OlympicGame.toMessage(): OlympicGame {
