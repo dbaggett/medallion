@@ -66,7 +66,7 @@ class GraphQLServer : AbstractHandler() {
             }
 
 
-            val operationName = json["operationName"].toString()
+            val operationName = json["operationName"] as String?
 
             val variables = getVariables(json["variables"])
 

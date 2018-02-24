@@ -43,14 +43,15 @@ _Each service must be running before starting the GraphQL server._
 ```
 
 # Querying the GraphQL server
+A [GraphiQL](https://github.com/graphql/graphiql) instance is available at http://localhost:8080.
 
-_Consumption by clients such as Apollo has not been verified to work._
+## Introspection
+Run [this](https://gist.github.com/craigbeck/b90915d49fda19d5b2b17ead14dcd6da) introspection query to learn about supported types and their fields manually.
 
-A GraphiQL instance is available at http://localhost:8080
+If your using an apollo client, [apollo-codegen](https://github.com/apollographql/apollo-codegen) can be used to generate the required schema file.
 
-Run [this](https://gist.github.com/craigbeck/b90915d49fda19d5b2b17ead14dcd6da) introspection query to learn about supported types and their fields.
 
-## Post Examples
+## Http Examples
 
 Post to http://localhost:8080/graphql
 
